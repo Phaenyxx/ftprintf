@@ -1,39 +1,38 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ftprintf.c                                       .::    .:/ .      .::   */
+/*   ftprinters.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/11/12 15:46:02 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/26 21:40:41 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Created: 2019/11/20 13:36:51 by trifflet     #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/26 21:40:40 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ftprintf.h"
-
-
-int		create(char *format, char **ret, void *content, int precision)
+char *format_number(void *content, int precision, int flags)
 {
-	int		type;
-	int		flags;
 
-
-	type = gettypeandflags(format, &flags);
-	
-	return ();
 }
 
-int		ft_printf(const char *in, ...)
+char *format_pointr(void *content, int precision, int flags)
 {
-	va_list	args;
-	int		i;
-	char	*out;
+	
+}
 
-	va_start(args, in);
-	i = 0;
-	(void)in;
+void	print_charac(void *content, int precision, int flags)
+{
 
-	return (0);
+}
+
+void	print_string(void *content, int precision, int flags)
+{
+	write(1, content, ft_strlen(content));
+}
+
+void	print_percnt(void)
+{
+
+	write(1, "%", 1);
 }
