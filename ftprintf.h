@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:52 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/26 20:35:37 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/27 17:58:39 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 
 # include <stdarg.h>
 # include <stdlib.h>
+# include "unistd.h"
 
 # define UNUSED(x) (void)(x)
 
