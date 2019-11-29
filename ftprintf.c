@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:02 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/27 17:58:19 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/27 18:12:10 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,10 +38,12 @@ int		ft_printf(const char *in, ...)
 	start = 0;
 	while(in[i])
 	{
-		if (in[i] == '%' || in[i] == '\0')
+		if (in[i] == '%')
 		{
 			send(in, start, i);
 		}
+		i++;
 	}
+	send(in, start, i);
 	return (i);
 }

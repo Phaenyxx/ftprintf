@@ -20,6 +20,6 @@ clean:
 				rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean:		clean
-				rm -rf $(NAME)
+				rm -rf $(NAME) $(NAME).dSYM
 
 re:		fclean all
