@@ -2,7 +2,9 @@ NAME			=		libftprintf.a
 
 HEADER			=		ftprintf.h
 
-SRC				=		ftprintf.c
+SRC				=		ftprintf.c		\
+						parser.c		\
+						ftprinters.c
 
 OBJ				=		${SRC:.c=.o}
 
@@ -23,7 +25,7 @@ clean:
 				rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean:		clean
-				rm -rf $(NAME) $(NAME).dSYM
+				rm -rf $(NAME) *.dSYM
 
 re:			fclean all
 
