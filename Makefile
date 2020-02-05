@@ -2,9 +2,11 @@ NAME			=		libftprintf.a
 
 HEADER			=		ftprintf.h
 
-SRC				=		ftprintf.c		\
-						parser.c		\
-						ftprinters.c
+SRC				=		printf.c	\
+						parser.c	\
+						prints.c	\
+						printnum.c	\
+						utils.c
 
 OBJ				=		${SRC:.c=.o}
 
@@ -16,12 +18,9 @@ FLAGS			=		-Wall -Wextra -Werror -g
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-				make -C libft
-				mv libft/libft.a ./$(NAME)
 				ar rcs $(NAME) $(OBJ)
 
 clean:
-				make -C libft clean
 				rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean:		clean
@@ -32,4 +31,4 @@ re:			fclean all
 test:		$(NAME)
 				gcc $(FLAGS) test.c -o test -L. -lftprintf
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test
