@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ftprintf.c                                       .::    .:/ .      .::   */
+/*   printf.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:02 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/27 17:58:19 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/05 16:14:37 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ftprintf.h"
+#include "printf.h"
 
-
-/*void	create(char *format, char **ret, void *content, int precision)
+char	*cutter(char *to_cut, int *i)
 {
-	int		type;
-	int		flags;
+	int len;
+	char *cut;
 
-	type = gettypeandflags(format, &flags);
-}*/
+	len = 1;
+	cut = NULL;
+	while (!is_conv(to_cut[len]))
+		len++;
+	len++;
+	if(!(cut = malloc(sizeof(char) + len)))
+		return (NULL);
+	*i += len;
+	while(len--)
+		cut[len] = to_cut[len];
+	return (cut);
+}
 
 void	send(const char *text, int start, int end)
 {
-	write (1, text + start, end - start);
+	if (start < end)
+		write (1, text + start, end - start);
 }
 
 int		ft_printf(const char *in, ...)
@@ -32,16 +42,26 @@ int		ft_printf(const char *in, ...)
 	va_list	args;
 	int		i;
 	int		start;
+	int		len;
 
 	va_start(args, in);
 	i = 0;
+	len = 0;
 	start = 0;
 	while(in[i])
 	{
-		if (in[i] == '%' || in[i] == '\0')
+		if (in[i] == '%')
 		{
 			send(in, start, i);
+			len += evaluate(cutter((char *)&in[i], &i), &args);
+			start = i--;
+			
 		}
+		else
+			len++;
+			i++;
+		
 	}
-	return (i);
+	send(in, start, i);
+	return (len);
 }

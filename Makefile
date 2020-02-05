@@ -2,14 +2,18 @@ NAME			=		libftprintf.a
 
 HEADER			=		ftprintf.h
 
-SRC				=		ftprintf.c
+SRC				=		printf.c	\
+						parser.c	\
+						prints.c	\
+						printnum.c	\
+						utils.c
 
 OBJ				=		${SRC:.c=.o}
 
 FLAGS			=		-Wall -Wextra -Werror -g
 
-%.o: %.c $(HEADER)
-					gcc $(FLAGS) -c $< -o ${<:.c=.o}
+%.o: %.c
+					gcc $(FLAGS) -I $(HEADER) -c $< -o $@
 
 all:		$(NAME)
 
@@ -20,6 +24,8 @@ clean:
 				rm -rf $(OBJ) $(OBJ_BONUS)
 
 fclean:		clean
-				rm -rf $(NAME)
+				rm -rf $(NAME) *.dSYM
 
-re:		fclean all
+re:			fclean all
+
+.PHONY: all clean fclean re test
