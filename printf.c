@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:02 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 11:54:20 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 12:58:18 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,5 +61,6 @@ int		ft_printf(const char *in, ...)
 		i++;
 	}
 	send(in, start, i);
+	va_end(args);
 	return (len);
 }
