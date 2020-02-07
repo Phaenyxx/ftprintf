@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:52 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 12:15:06 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 12:44:20 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
-# include "color.h"
 
 # define DECIMAL	"0123456789"
 # define HEXA_LOW	"0123456789abcdef"
