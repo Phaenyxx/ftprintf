@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/13 17:50:23 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/07 12:35:10 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 13:04:47 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,6 +63,7 @@ int		evaluate(char *str, va_list *args)
 	flags.isprec = 0;
 	flags.precision = 0;
 	decrypt(&flags, str + 1, args);
+	free(str);
 	flags.type = flags.type == 'i' ? 'd' : flags.type;
 	if (flags.type == 'c')
 		return (print_charac(va_arg(*args, int), flags));
