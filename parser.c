@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/12/13 17:50:23 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 16:14:46 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/06 17:08:31 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,8 +23,8 @@ int		is_conv(char x)
 
 void	dumpflags(t_flags flags)
 {
-	printf("Conversion: %c\nField: %d & Precision: %d\nMinus: %s\nZero: %s\n\n",\
-		flags.type, flags.field, flags.precision,\
+	printf("Conversion: %c\nField: %d & Precision: %d (%d)\nMinus: %s\nZero: %s\n\n",\
+		flags.type, flags.field, flags.precision, flags.isprec,\
 		flags.minus ? "true" : "false", flags.zero ? "true" : "false");
 }
 
@@ -35,6 +35,7 @@ t_flags	decrypt(char *str, va_list *args)
 
 	flags.zero = 0;
 	flags.minus = 0;
+	flags.isprec = 0;
 	flags.precision = 0;
 	while (*str == '0' || *str == '-')
 	{
@@ -43,22 +44,26 @@ t_flags	decrypt(char *str, va_list *args)
 		str++;
 	}
 	flags.field = *str == '*' ? va_arg(*args, int) : ft_atoi(str);
+	if(*str == '*')
+		str++;
 	while ('0' <= *str && *str <= '9')
 		str++;
 	if (*str == '.')
+	{
 		flags.precision = *(++str) == '*' ? va_arg(*args, int) : ft_atoi(str);
-	if (flags.precision < 0 || flags.field < 0)
+		flags.isprec = 1;
+	}
+	if (flags.field < 0)
 		{
 			flags.field = flags.field < 0 ? flags.field * -1 : flags.field;
-			flags.precision = flags.precision < 0 ?\
-				flags.precision * -1 : flags.precision;
 			flags.minus = 1;
 		}
-	if (flags.type == 'i')
-		flags.type = 'd';
+
 	while (!is_conv(*str))
 		str++;
 	flags.type = *str;
+	if (flags.type == 'i')
+		flags.type = 'd';
 	//dumpflags(flags);
 	return (flags);
 }
@@ -68,8 +73,10 @@ int		evaluate(char *str, va_list *args)
 	t_flags flags;
 
 	flags = decrypt(str + 1, args);
-	if (flags.type == 'c' || flags.type == '%')
+	if (flags.type == 'c')
 		return(print_charac(va_arg(*args, int), flags));
+	if (flags.type == '%')
+		return(print_charac('%', flags));
 	if (flags.type == 'd') 
 		return(print_signed(va_arg(*args, int), flags));
 	if (flags.type == 'u' || flags.type == 'x' || flags.type == 'X')

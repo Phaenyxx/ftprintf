@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:52 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 17:10:02 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/05 18:45:01 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,6 +29,7 @@ typedef struct	s_flags
 	int type;
 	int	field;
 	int precision;
+	int isprec;
 	int zero;
 	int minus;
 	

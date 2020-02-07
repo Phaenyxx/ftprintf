@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 12:19:18 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 17:09:51 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/06 15:44:19 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,6 +19,7 @@ int		get_len(long n, int base, int is_signed)
 	int m;
 
 	m = 0;
+
 	if (is_signed)
 		while (n)
 		{
@@ -26,11 +27,13 @@ int		get_len(long n, int base, int is_signed)
 			m++;
 		}
 	else
-		while(n)
+		while(n != 0)
 		{
-			n = (unsigned int)n / base;
+			n = (unsigned long)n / base;
 			m++;
 		}
+	if (m==0)
+		m++;
 	return (m);
 }
 
