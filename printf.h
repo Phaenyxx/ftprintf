@@ -6,13 +6,13 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/12 15:46:52 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 17:10:02 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 12:15:06 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FTPRINTF_H
-# define FTPRINTF_H
+#ifndef PRINTF_H
+# define PRINTF_H
 
 # include <stdarg.h>
 # include <stdlib.h>
@@ -29,13 +29,13 @@ typedef struct	s_flags
 	int type;
 	int	field;
 	int precision;
+	int isprec;
 	int zero;
 	int minus;
-	
 }				t_flags;
 
-int				ft_printf(const char *, ...)__attribute__ ((format (printf, 1, 2)));;
-
+int				ft_printf(const char *str,
+		...) __attribute__((format(printf,1,2)));
 int				is_conv(char x);
 
 int				get_len(long n, int base, int is_signed);

@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2020/01/14 12:19:18 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/05 17:09:51 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 11:48:31 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int		get_len(long n, int base, int is_signed)
+int			get_len(long n, int base, int is_signed)
 {
 	int m;
 
@@ -26,21 +26,23 @@ int		get_len(long n, int base, int is_signed)
 			m++;
 		}
 	else
-		while(n)
+		while (n != 0)
 		{
-			n = (unsigned int)n / base;
+			n = (unsigned long)n / base;
 			m++;
 		}
+	if (m == 0)
+		m++;
 	return (m);
 }
 
-void	nblanks(char c, int n)
+void		nblanks(char c, int n)
 {
 	while (n-- > 0)
 		write(1, &c, 1);
 }
 
-int	ft_strlen(const char *str)
+int			ft_strlen(const char *str)
 {
 	return (*str ? 1 + ft_strlen(str + 1) : 0);
 }
