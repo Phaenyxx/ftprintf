@@ -6,14 +6,14 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/11/20 13:36:51 by trifflet     #+#   ##    ##    #+#       */
-/*   Updated: 2020/02/06 17:59:33 by trifflet    ###    #+. /#+    ###.fr     */
+/*   Updated: 2020/02/07 12:33:39 by trifflet    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-char *getbase(char c)
+char	*getbase(char c)
 {
 	if (c == 'u')
 		return (DECIMAL);
@@ -24,7 +24,7 @@ char *getbase(char c)
 	return (DECIMAL);
 }
 
-int	print_pointr(unsigned long number, t_flags flags)
+int		print_pointr(unsigned long number, t_flags flags)
 {
 	int ret;
 
@@ -42,7 +42,7 @@ int	print_pointr(unsigned long number, t_flags flags)
 	return (ret);
 }
 
-int	print_charac(char c, t_flags flags)
+int		print_charac(char c, t_flags flags)
 {
 	!flags.minus ? nblanks(' ', flags.field - 1) : 0;
 	if (flags.type == '%')
@@ -53,7 +53,7 @@ int	print_charac(char c, t_flags flags)
 	return (flags.field > 1 ? flags.field : 1);
 }
 
-int	print_string(char *string, t_flags flags)
+int		print_string(char *string, t_flags flags)
 {
 	size_t len;
 
