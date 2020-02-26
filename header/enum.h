@@ -6,9 +6,12 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 17:19:58 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/14 17:20:20 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/02/25 18:20:06 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef ENUM_H
+# define ENUM_H
 
 typedef enum		e_event_code
 {
@@ -51,3 +54,29 @@ typedef enum		e_key_code
 	UP_ARROW = 126,
 	DOWN_ARROW = 125,
 }					t_key_code;
+
+typedef enum		e_infos_mask
+{
+	INFO_ERROR = 1,
+	RESOLUTION = 2,
+	NORTH_TEXT = 4,
+	SOUTH_TEXT = 8,
+	WEST_TEXT = 16,
+	EAST_TEXT = 32,
+	SPRITE_TEXT = 64,
+	FLOOR_COLOR = 128,
+	CEILING_COLOR = 256,
+	MAP_GET = 512,
+}					t_infos_mask;
+
+typedef enum		e_sequence
+{
+	SEQ_ID = '1',
+	SEQ_TEXT = '2',
+	SEQ_NUM = '3',
+	SEQ_COMMA = '4',
+	SEQ_SPACE = '5',
+	SEQ_NRSPACE = '6',
+}					t_sequence;
+
+#endif

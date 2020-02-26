@@ -6,7 +6,7 @@
 #    By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 14:15:23 by trifflet          #+#    #+#              #
-#    Updated: 2020/02/20 17:02:41 by trifflet         ###   ########lyon.fr    #
+#    Updated: 2020/02/26 17:02:34 by trifflet         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,9 @@ SRC_FILES	=	main.c					\
 				hooker.c				\
 				render.c				\
 				parse.c					\
+				parse_objects.c			\
+				parse_utils.c			\
+				map_check.c				\
 				time.c
 
 OBJ_DIR		=	obj
