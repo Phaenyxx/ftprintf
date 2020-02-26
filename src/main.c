@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 12:53:48 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/20 17:08:44 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/02/26 17:25:16 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int		main(void)
 	t_data	data;
 
 	get_infos("test.cub", &data);
-	printf("%d & %d", data.window.width, data.window.height);
+	ft_printf("%s", data.map.validity ? "GG\n" : "bite\n");
+	for (int f = 0; f < data.map.height; f++)
+		printf("%s\n", data.map.map[f]);
 	startup(&data);
 	hooker(&data);
 	mlx_loop(data.window.mlx_ptr);
