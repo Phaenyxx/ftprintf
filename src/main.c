@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/13 12:53:48 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/26 17:25:16 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 19:45:45 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,47 @@ int		ft_exit(int ret)
 	return (0);
 }
 
+void handle_inputs(t_data *data, int time)
+{
+	if (data->inputs.keyboard[Q])
+		slide(data, -time);
+	if (data->inputs.keyboard[E])
+		slide(data, time);
+	if (data->inputs.keyboard[W])
+		forward(data, time);
+	if (data->inputs.keyboard[S])
+		forward(data, -time);
+	if (data->inputs.keyboard[A])
+		rotate(data, time);
+	if (data->inputs.keyboard[D])
+		rotate(data, -time);
+	if (data->inputs.keyboard[Q] || data->inputs.keyboard[E] ||\
+		data->inputs.keyboard[W] || data->inputs.keyboard[S] ||\
+		data->inputs.keyboard[A] || data->inputs.keyboard[D])
+	{
+		data->sprites.ceiling.alpha = (char)(BLUR_STRENGTH * data->inputs.keyboard[UP_ARROW]);
+		data->sprites.floor.alpha = (char)(BLUR_STRENGTH * data->inputs.keyboard[UP_ARROW]);
+	}
+	else
+	{
+		data->sprites.ceiling.alpha -= BLUR_DECAY;
+		data->sprites.floor.alpha -= BLUR_DECAY;
+	}
+}
+
 int		loop(t_data *data)
 {
-	t_timer actual;
+	t_timer new_time;
 
-	actual = get_time();
-	if (actual - data->inputs.time < 16)
+	new_time = get_time();
+	new_time -= data->inputs.time;
+	if (new_time < 16)
 	{
-		usleep(1000 * (actual - data->inputs.time));
+		usleep(1000 * (new_time));
 		return (0);
 	}
-	data->inputs.time = actual;
+	handle_inputs(data, new_time);
+	data->inputs.time += new_time;
 	if (data->inputs.keyboard[ESCAPE])
 		ft_exit(0);
 	render(data);
@@ -37,14 +67,19 @@ int		loop(t_data *data)
 
 int		main(void)
 {
+	int error;
 	t_data	data;
 
-	get_infos("test.cub", &data);
-	ft_printf("%s", data.map.validity ? "GG\n" : "bite\n");
-	for (int f = 0; f < data.map.height; f++)
-		printf("%s\n", data.map.map[f]);
+	if(((error = get_infos("test.cub", &data)) & 1023) != RESOLUTION + FLOOR_COLOR + CEILING_COLOR + MAP_GET)
+	{
+		ft_printf("Error\n");
+		if (!(error & RESOLUTION))
+			ft_printf("Resolution isn't well formatted\n");
+		return (0);
+	}
 	startup(&data);
 	hooker(&data);
 	mlx_loop(data.window.mlx_ptr);
+
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:24:46 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/25 18:16:29 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 12:33:28 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,22 @@ char	*skip(char *str, int n)
 	return (str);
 }
 
-int		check_line(char *line)
+int		check_line2(char *line, char *set)
 {
-	if (!is_in(*line, "RNSEWCFOA10") && *line)
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (!is_in(line[i++], set) && *line)
+			return (-1);
+	}
+	return (0);
+}
+
+int		check_line(char *line, char *set)
+{
+	if (!is_in(*line, set) && *line)
 		return (-1);
 	return (0);
 }

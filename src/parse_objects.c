@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:25:28 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/26 18:20:00 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 12:49:46 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,11 @@ int		get_map(char *line, int fd, t_data *data)
 	linefeed->line = line;
 	number_line = 1;
 	control = 1;
-	max_line_len = 0;
-	max_line_len = max(max_line_len, ft_strlen(line));
+	max_line_len = ft_strlen(line);
 	while (control == 1)
 	{
 		control = get_next_line(fd, &line);
-		control += check_sequence(line, "36", line);
+		control += check_line2(line, "120NSWE");
 		number_line++;
 		max_line_len = max(max_line_len, ft_strlen(line));
 		if (feed(linefeed, line))
@@ -91,7 +90,5 @@ int		get_map(char *line, int fd, t_data *data)
 	data->map.map = construct_map(linefeed, number_line, max_line_len);
 	data->map.height = number_line;
 	data->map.width = max_line_len;
-	for (int f = 0; f < number_line; f++)
-		printf("%s\n", data->map.map[f]);
 	return (check_map(data));
 }

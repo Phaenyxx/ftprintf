@@ -6,7 +6,7 @@
 #    By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/12 14:15:23 by trifflet          #+#    #+#              #
-#    Updated: 2020/02/26 17:02:34 by trifflet         ###   ########lyon.fr    #
+#    Updated: 2020/03/02 16:05:17 by trifflet         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,13 @@ SRC_FILES	=	main.c					\
 				startup.c				\
 				hooker.c				\
 				render.c				\
+				minimap.c				\
 				parse.c					\
 				parse_objects.c			\
 				parse_utils.c			\
 				map_check.c				\
+				math_utils.c			\
+				movements.c				\
 				time.c
 
 OBJ_DIR		=	obj
@@ -48,7 +51,7 @@ all:		$(NAME)
 $(NAME):	$(OBJ)
 			make -C printf && mv printf/libftprintf.a lib/ftprintf.a
 			make -C get_next_line && mv get_next_line/get_next_line.a lib/
-			gcc $(FLAGS) $(OBJ) -I $(HEADERS) $(LIBS) -o $(NAME)
+			gcc $(FLAGS) $(OBJ) -I $(HEADERS) -lm $(LIBS) -o $(NAME)
 
 clean:
 	rm -rf $(OBJ)

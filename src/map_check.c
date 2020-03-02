@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 13:51:44 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/26 17:46:59 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 14:34:26 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,21 @@ void	check_cell(int x, int y, t_data *data)
 	if (is_out(x, y, data->map))
 		data->map.validity = 0;
 	else
-		data->map.map[y][x]	= '.';
-	if( x > 0 && data->map.map[y][x - 1] == '0')
+		data->map.map[y][x] = '.';
+	if (x > 0 && data->map.map[y][x - 1] == '0')
 		check_cell(x - 1, y, data);
-	if( y > 0 && data->map.map[y - 1][x] == '0')
+	if (y > 0 && data->map.map[y - 1][x] == '0')
 		check_cell(x, y - 1, data);
-	if( x < data->map.width && data->map.map[y][x + 1] == '0')
+	if (x < data->map.width && data->map.map[y][x + 1] == '0')
 		check_cell(x + 1, y, data);
-	if( y < data->map.height && data->map.map[y + 1][x] == '0')
+	if (y < data->map.height && data->map.map[y + 1][x] == '0')
 		check_cell(x, y + 1, data);
 }
 
 void	find_player(int *x, int *y, t_data *data)
 {
+	*x = 0;
+	*y = 0;
 	while (*y < data->map.height && !is_in(data->map.map[*y][*x], "NSWE"))
 	{
 		(*x)++;
@@ -62,15 +64,17 @@ int		check_map(t_data *data)
 	x = 0;
 	y = 0;
 	find_player(&x, &y, data);
+	data->geo.pos.x = x + 0.5;
+	data->geo.pos.y = y + 0.5;
 	if (is_out(x, y, data->map))
 		return (ERROR);
-	if( x > 0 && data->map.map[y][x - 1] == '0')
+	if (x > 0 && data->map.map[y][x - 1] == '0')
 		check_cell(x - 1, y, data);
-	if( y > 0 && data->map.map[y - 1][x] == '0')
+	if (y > 0 && data->map.map[y - 1][x] == '0')
 		check_cell(x, y - 1, data);
-	if( x < data->map.width && data->map.map[y][x + 1] == '0')
+	if (x < data->map.width && data->map.map[y][x + 1] == '0')
 		check_cell(x + 1, y, data);
-	if( y < data->map.height && data->map.map[y + 1][x] == '0')
+	if (y < data->map.height && data->map.map[y + 1][x] == '0')
 		check_cell(x, y + 1, data);
 	if (data->map.validity)
 		return (MAP_GET);

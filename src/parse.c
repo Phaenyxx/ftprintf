@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:11:04 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/26 15:50:50 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 19:27:36 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,20 @@ int		check_sequence(char *line, char *sequence, char *control)
 int		get_color(char *line, t_data *data, int type)
 {
 	if (check_sequence(line, "1534634636", line))
-		return (ERROR);
+		return (0);
 	if (type == FLOOR_COLOR)
 	{
 		data->sprites.floor.red = ft_atoi(skip(line, 1));
 		data->sprites.floor.green = ft_atoi(skip(line, 2));
 		data->sprites.floor.blue = ft_atoi(skip(line, 3));
-		data->sprites.ceiling.alpha = 0;
+		data->sprites.floor.alpha = (char)200;
 	}
 	else if (type == CEILING_COLOR)
 	{
 		data->sprites.ceiling.red = ft_atoi(skip(line, 1));
 		data->sprites.ceiling.green = ft_atoi(skip(line, 2));
 		data->sprites.ceiling.blue = ft_atoi(skip(line, 3));
-		data->sprites.ceiling.alpha = 0;
+		data->sprites.ceiling.alpha = (char)200;
 	}
 	return (type);
 }
@@ -65,26 +65,30 @@ int		get_color(char *line, t_data *data, int type)
 int		get_resolution(char *line, t_data *data)
 {
 	if (check_sequence(line, "153536", line))
-		return (ERROR);
-	data->window.width = ft_atoi(skip(line, 1));
-	data->window.height = ft_atoi(skip(line, 2));
+		return (0);	
+	data->window.w = ft_atoi(skip(line, 1));
+	data->window.h = ft_atoi(skip(line, 2));
 	return (RESOLUTION);
 }
 
-int		analyze(char *line, t_data *data, int *mask)
+int		analyze(char *line, t_data *data, int fd)
 {
-	if (!line || check_line(line))
+	int ret;
+
+	ret = 0;
+	if (!line || check_line(line, "RNSEWCFOA10"))
 		return (-1);
 	if (*line == '1' || *line == '0')
-		return (1);
+		ret = get_map(line, fd, data);
 	if (*line == 'R')
-		*mask += get_resolution(line, data);
+		ret = get_resolution(line, data);
 	if (*line == 'F')
-		*mask += get_color(line, data, FLOOR_COLOR);
+		ret = get_color(line, data, FLOOR_COLOR);
 	if (*line == 'C')
-		*mask += get_color(line, data, CEILING_COLOR);
-	free(line);
-	return (0);
+		ret = get_color(line, data, CEILING_COLOR);
+	if (ret != MAP_GET)
+		free(line);
+	return (ret);
 }
 
 int		get_infos(char *file, t_data *data)
@@ -97,13 +101,11 @@ int		get_infos(char *file, t_data *data)
 	end = 1;
 	mask = 0;
 	fd = open(file, O_RDONLY);
-	while (end && end < 2 && !(mask % 2))
+	data->map.validity = 1;
+	while (end && !(mask % 2) && !(mask & MAP_GET))
 	{
 		end = get_next_line(fd, &line);
-		end += analyze(line, data, &mask);
+		mask += analyze(line, data, fd);
 	}
-	data->map.validity = 1;
-	mask += get_map(line, fd, data);
-	return (!((mask & 1023) ==\
-		RESOLUTION + FLOOR_COLOR + CEILING_COLOR + MAP_GET));
+	return (mask);
 }

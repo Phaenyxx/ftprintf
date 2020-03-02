@@ -6,7 +6,7 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/14 17:19:58 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/25 18:20:06 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 19:34:29 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ typedef enum		e_key_code
 	ZOOM_IN = 69,
 	ZOOM_OUT = 78,
 	SPACE = 49,
+	A = 0,
+	S = 1,
+	D = 2,
+	Q = 12,
+	W = 13,
+	E = 14,
+	SHIFT = 56,
 	NUM_LOCK_9 = 92,
 	NUM_LOCK_8 = 91,
 	NUM_LOCK_7 = 89,

@@ -6,11 +6,21 @@
 /*   By: trifflet <trifflet@student.le-101.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 16:05:50 by trifflet          #+#    #+#             */
-/*   Updated: 2020/02/24 15:16:04 by trifflet         ###   ########lyon.fr   */
+/*   Updated: 2020/03/02 15:01:13 by trifflet         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/cub3d.h"
+
+t_image	create_image(int w, int y, t_data *data)
+{
+	t_image	img;
+
+	img.ptr = mlx_new_image(data->window.mlx_ptr, w, y);
+	img.data = (t_pixel *)mlx_get_data_addr(img.ptr,\
+		&img.bpp, &img.line_size, &img.endian);
+	return (img);
+}
 
 void	empty(t_data *data)
 {
@@ -22,21 +32,46 @@ void	empty(t_data *data)
 	data->inputs.time = get_time();
 }
 
-void	set_background(t_data *data)
+void	set_background(t_data *data, int creation)
 {
 	int i;
 
-	data->window.background = create_image(data->window.width,\
-		data->window.height, data);
+	if (creation)
+		data->window.bg = create_image(data->window.w,\
+			data->window.h, data);
 	i = 0;
-	while (i < data->window.height * data->window.width / 2)
+	while (i < data->window.h * data->window.w / 2)
+		data->window.bg.data[i++] = data->sprites.ceiling;
+	while (i < data->window.h * data->window.w)
+		data->window.bg.data[i++] = data->sprites.floor;
+}
+
+void	get_orientation(t_data *data)
+{
+	char c;
+	
+	c = data->map.map[(int)data->geo.pos.y][(int)data->geo.pos.x];
+	data->geo.dir_player.x = 0;
+	data->geo.dir_player.y = 0;
+	data->geo.plane.x = 0.66;
+	data->geo.plane.y = 0;
+	if (c == 'N')
+		data->geo.dir_player.y = -1;
+	if (c == 'S')
+		data->geo.dir_player.y = 1;
+	if (c == 'W')
 	{
-		data->window.background.data[i++] = data->sprites.ceiling;
+		data->geo.dir_player.x = -1;
+		data->geo.plane.y = 0.66;
+		data->geo.plane.x = 0;
 	}
-	while (i < data->window.height * data->window.width)
+	if (c == 'E')
 	{
-		data->window.background.data[i++] = data->sprites.floor;
+		data->geo.dir_player.x = 1;
+		data->geo.plane.y = 0.66;
+		data->geo.plane.x = 0;
 	}
+	data->map.map[(int)data->geo.pos.y][(int)data->geo.pos.x] = '.';
 }
 
 void	startup(t_data *data)
@@ -44,8 +79,9 @@ void	startup(t_data *data)
 	empty(data);
 	if ((data->window.mlx_ptr = mlx_init()) == NULL)
 		ft_exit(EXIT_FAILURE);
-	set_background(data);
+	set_background(data, 1);
+	get_orientation(data);
 	if ((data->window.window = mlx_new_window(data->window.mlx_ptr,\
-		data->window.width, data->window.height, "Cub3D")) == NULL)
+		data->window.w, data->window.h, "Cub3D")) == NULL)
 		ft_exit(EXIT_FAILURE);
 }
